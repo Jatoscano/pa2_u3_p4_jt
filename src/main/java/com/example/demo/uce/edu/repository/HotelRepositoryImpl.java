@@ -24,10 +24,10 @@ public class HotelRepositoryImpl implements HotelRepository{
 	@Override
 	public List<Hotel> seleccionarJoin() {
 		//SQL
-		//SELECT * FROM Hotel h INNER JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
+		//SELECT * FROM Hotel h JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 				
 		//JPQL
-		//SELECT h FROM hotel h INNER JOIN h.habitaciones ha
+		//SELECT h FROM hotel h JOIN h.habitaciones ha
 				
 		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h JOIN h.habitaciones ha",Hotel.class);
 				
@@ -39,10 +39,10 @@ public class HotelRepositoryImpl implements HotelRepository{
 	public List<Hotel> seleccionarInnerJoin() {
 		
 		//SQL
-		//SELECT * FROM Hotel h INNER INNER JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
+		//SELECT * FROM Hotel h INNER JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 		
 		//JPQL
-		//SELECT h FROM hotel h INNER INNER JOIN h.habitaciones ha
+		//SELECT h FROM hotel h INNER JOIN h.habitaciones ha
 		
 		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h INNER JOIN h.habitaciones ha",Hotel.class);
 		

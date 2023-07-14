@@ -8,14 +8,22 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.uce.edu.repository.model.Hotel;
-import com.example.demo.uce.edu.service.HotelService;
+import com.example.demo.uce.edu.repository.model.Ciudadano;
+import com.example.demo.uce.edu.repository.model.Vehiculo;
+import com.example.demo.uce.edu.service.CiudadanoService;
+import com.example.demo.uce.edu.service.VehiculoService;
 
 @SpringBootApplication
 public class Pa2U3P4JtApplication implements CommandLineRunner{
 
+
 	@Autowired
-	private HotelService hotelService;
+	private CiudadanoService ciudadanoService;
+	
+	@Autowired
+	private VehiculoService vehiculoService;
+	
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U3P4JtApplication.class, args);
@@ -23,85 +31,153 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		//JOINS
-
-		//JOIN
-		List<Hotel> listaHotel = new ArrayList<>();
-		listaHotel = this.hotelService.buscarJoin();
 		
-		for(Hotel e: listaHotel) {
-		System.out.println(e);
-		}
+		//VEHICULO - MATRICULA
+		System.out.println("Joins - Vehiculos");
+		//JOINS
 		
 		//INNER JOIN
-		List<Hotel> listaHotel1 = new ArrayList<>();
-		listaHotel1 = this.hotelService.buscarInnerJoin();
+		List<Vehiculo> listaVehiculo1 = new ArrayList<>();
+	    listaVehiculo1 = this.vehiculoService.buscarInnerJoin();
 		
-		for(Hotel e: listaHotel1) {
-		System.out.println(e);
+		for(Vehiculo v: listaVehiculo1) {
+			if(v == null) {
+			 System.err.println("No existe aun el Vehiculo");
+			}
+			else {
+			System.out.println(v);
+			}
+		}	
+	
+	
+		//OUTER JOIN
+		
+		//RIGHT JOIN
+		List<Vehiculo> listaVehiculo2 = new ArrayList<>();
+	    listaVehiculo2 = this.vehiculoService.buscarOuterRightJoin();
+		
+		for(Vehiculo v: listaVehiculo2) {
+			if(v == null) {
+			 System.err.println("No existe aun el Ciudadano");
+			}
+			else {
+			System.out.println(v);
+			}
 		}
+		
+		//LEFT JOIN
+		List<Vehiculo> listaVehiculo3 = new ArrayList<>();
+	    listaVehiculo3 = this.vehiculoService.buscarOuterLeftJoin();
+		
+		for(Vehiculo v: listaVehiculo3) {
+			if(v == null) {
+			 System.err.println("No existe aun el Vehiculo");
+			}
+			else {
+			System.out.println(v);
+			}
+		}
+
+		//FULL - OUTER
+		
+		List<Vehiculo> listaVehiculo4 = new ArrayList<>();
+	    listaVehiculo4 = this.vehiculoService.buscarOuterFullJoin();
+		
+		for(Vehiculo v: listaVehiculo4) {
+			if(v == null) {
+			 System.err.println("No existe aun el Vehiculo");
+			}
+			else {
+			System.out.println(v);
+			}
+		}
+		
+	
+		// JOIN WHERE
+		List<Vehiculo> listaVehiculo5 = new ArrayList<>();
+	    listaVehiculo5 = this.vehiculoService.buscarWhereJoin();
+		
+		for(Vehiculo v: listaVehiculo5) {
+			if(v == null) {
+			 System.err.println("No existe aun el Vehiculo");
+			}
+			else {
+			System.out.println(v);
+			}
+		}
+  
+		//CIUDADANO - EMPLEADO
+		System.out.println("Joins - Ciudadanos");
+		//JOINS
+		
+		//INNER JOIN
+		List<Ciudadano> listaCiudadano1 = new ArrayList<>();
+	    listaCiudadano1 = this.ciudadanoService.buscarInnerJoin();
+		
+		for(Ciudadano c: listaCiudadano1) {
+			if(c == null) {
+			 System.err.println("No existe aun el Ciudadano");
+			}
+			else {
+			System.out.println(c);
+			}
+		}	
+	
 		
 		//OUTER JOIN
 		
 		//RIGHT JOIN
-		List<Hotel> listaHotel2 = new ArrayList<>();
-		listaHotel2 = this.hotelService.buscarOuterRightJoin();
+		List<Ciudadano> listaCiudadano2 = new ArrayList<>();
+	    listaCiudadano2 = this.ciudadanoService.buscarOuterRightJoin();
 		
-		for(Hotel e: listaHotel2) {
-		System.out.println(e);
+		for(Ciudadano c: listaCiudadano2) {
+			if(c == null) {
+			 System.err.println("No existe aun el Ciudadano");
+			}
+			else {
+			System.out.println(c);
+			}
 		}
-
+		
 		//LEFT JOIN
-		List<Hotel> listaHotel3 = new ArrayList<>();
-		listaHotel3 = this.hotelService.buscarOuterLeftJoin();
+		List<Ciudadano> listaCiudadano3 = new ArrayList<>();
+	    listaCiudadano3 = this.ciudadanoService.buscarOuterLeftJoin();
 		
-		for(Hotel e: listaHotel3) {
-		System.out.println(e);
-		}
-
-		//HABITACION - LEFT
-		List<Hotel> listaHotel4 = new ArrayList<>();
-		listaHotel4 = this.hotelService.buscarHabitacionOuterLeftJoin();
-		
-		for(Hotel e: listaHotel4) {
-		System.out.println(e);
+		for(Ciudadano c: listaCiudadano3) {
+			if(c == null) {
+			 System.err.println("No existe aun el Ciudadano");
+			}
+			else {
+			System.out.println(c);
+			}
 		}
 
 		//FULL - OUTER
-		List<Hotel> listaHotel5 = new ArrayList<>();
-		listaHotel5 = this.hotelService.buscarOuterFullJoin();
 		
-		for(Hotel e: listaHotel5) {
-		System.out.println(e);
-		}
+		List<Ciudadano> listaCiudadano4 = new ArrayList<>();
+	    listaCiudadano4 = this.ciudadanoService.buscarOuterFullJoin();
 		
-		List<Hotel> listaHotel6 = new ArrayList<>();
-		listaHotel6 = this.hotelService.buscarOuterFullJoin();
-		
-		for(Hotel e: listaHotel6) {
-			if(e == null) {
-				System.err.println("No existe aun el Hotel");
+		for(Ciudadano c: listaCiudadano4) {
+			if(c == null) {
+			 System.err.println("No existe aun el Ciudadano");
 			}
 			else {
-			System.out.println(e.getNombre());
+			System.out.println(c);
 			}
 		}
+		
 		
 		// JOIN WHERE
-		List<Hotel> listaHotel7 = new ArrayList<>();
-		listaHotel7 = this.hotelService.buscarWhereJoin();
+		List<Ciudadano> listaCiudadano5 = new ArrayList<>();
+		listaCiudadano5 = this.ciudadanoService.buscarWhereJoin();
 		
-		for(Hotel e: listaHotel7) {
-			if(e == null) {
+		for(Ciudadano c: listaCiudadano5) {
+			if(c == null) {
 				System.err.println("No existe aun el Hotel");
 			}
 			else {
-			System.out.println(e.getNombre());
+			System.out.println(c);
 			}
 		}
 	}
-	
-	
-
 }
