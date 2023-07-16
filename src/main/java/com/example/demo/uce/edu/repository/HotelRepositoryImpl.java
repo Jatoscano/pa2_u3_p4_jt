@@ -18,6 +18,12 @@ public class HotelRepositoryImpl implements HotelRepository{
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@Override
+	public void insertar(Hotel hotel) {
+		
+		this.entityManager.persist(hotel);
+	}
+	
 	//JOINS
 	
 	//JOIN
@@ -27,10 +33,10 @@ public class HotelRepositoryImpl implements HotelRepository{
 		//SELECT * FROM Hotel h JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 				
 		//JPQL
-		//SELECT h FROM hotel h JOIN h.habitaciones ha
+		//SELECT h FROM Hotel h JOIN h.habitaciones ha
 				
 		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h JOIN h.habitaciones ha",Hotel.class);
-				
+		
 		return myTypedQuery.getResultList();
 	}
 
@@ -42,16 +48,35 @@ public class HotelRepositoryImpl implements HotelRepository{
 		//SELECT * FROM Hotel h INNER JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 		
 		//JPQL
-		//SELECT h FROM hotel h INNER JOIN h.habitaciones ha
+		//SELECT h FROM Hotel h INNER JOIN h.habitaciones ha
 		
 		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h INNER JOIN h.habitaciones ha",Hotel.class);
 		
 		return myTypedQuery.getResultList();
 	}
 
+	@Override
+	public List<Hotel> seleccionarInnerJoinActualizacion() {
+		//SQL
+		//SELECT * FROM Hotel h INNER JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
+				
+		//JPQL
+		//SELECT h FROM Hotel h INNER JOIN h.habitaciones ha
+				
+		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h INNER JOIN h.habitaciones ha",Hotel.class);		
+		
+		List<Hotel> listaHoteles = myTypedQuery.getResultList();		
+		for(Hotel h: listaHoteles) {
+			h.getHabitaciones().size(); // Le doy la senial para que traiga los hoteles con sus refeencias
+		}
+		return listaHoteles;
+	}
+	
 	//OUTER JOIN
 	
 	
+	
+
 	//RIGHT JOIN
 	@Override
 	public List<Hotel> seleccionarOuterRightJoin() {
@@ -59,7 +84,7 @@ public class HotelRepositoryImpl implements HotelRepository{
 		//SELECT * FROM Hotel h RIGHT JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 				
 		//JPQL
-		//SELECT h FROM hotel h RIGHT JOIN h.habitaciones ha
+		//SELECT h FROM Hotel h RIGHT JOIN h.habitaciones ha
 				
 		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h RIGHT JOIN h.habitaciones ha",Hotel.class);
 				
@@ -73,7 +98,7 @@ public class HotelRepositoryImpl implements HotelRepository{
 				//SELECT * FROM Hotel h LEFT JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 						
 				//JPQL
-				//SELECT h FROM hotel h LEFTT JOIN h.habitaciones ha
+				//SELECT h FROM Hotel h LEFTT JOIN h.habitaciones ha
 						
 				TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h LEFT JOIN h.habitaciones ha",Hotel.class);
 						
@@ -87,7 +112,7 @@ public class HotelRepositoryImpl implements HotelRepository{
 		//SELECT * FROM Hotel h LEFT JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 				
 		//JPQL
-		//SELECT ha FROM hotel h LEFT JOIN h.habitaciones ha
+		//SELECT ha FROM Hotel h LEFT JOIN h.habitaciones ha
 				
 		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT ha FROM Hotel h LEFT JOIN h.habitaciones ha",Hotel.class);
 				
@@ -101,7 +126,7 @@ public class HotelRepositoryImpl implements HotelRepository{
 		//SELECT * FROM Hotel h FULL JOIN Habitacion ha ON h.hote_id = ha.habit_hotel_id
 						
 	    //JPQL
-		//SELECT h FROM hotel h FULL JOIN h.habitaciones ha
+		//SELECT h FROM Hotel h FULL JOIN h.habitaciones ha
 						
 		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery("SELECT h FROM Hotel h FULL JOIN h.habitaciones ha",Hotel.class);
 						
@@ -122,6 +147,24 @@ public class HotelRepositoryImpl implements HotelRepository{
 								
 	    return myTypedQuery.getResultList();
 	}
+
+	//Join Fetch
+	
+	@Override
+	public List<Hotel> seleccionarJoinFetch() {
+		//SQL
+		//SELECT * FROM Hotel h JOIN FETCH Habitacion ha ON h.hote_id = ha.habit_hotel_id
+						
+		//JPQL
+		//SELECT h FROM Hotel h JOIN FETCH h.habitaciones ha
+						
+		TypedQuery<Hotel> myTypedQuery = this.entityManager.createQuery(
+				"SELECT h FROM Hotel h JOIN FETCH h.habitaciones ha"
+				,Hotel.class);
+
+		return myTypedQuery.getResultList();
+	}
+	
 	
 
 }

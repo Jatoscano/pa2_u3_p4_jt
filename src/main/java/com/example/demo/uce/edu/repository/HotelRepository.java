@@ -6,6 +6,8 @@ import com.example.demo.uce.edu.repository.model.Hotel;
 
 public interface HotelRepository {
 	
+	public void insertar(Hotel hotel);
+	
 	//Joins
 	
 	//Join
@@ -13,6 +15,9 @@ public interface HotelRepository {
 	
 	//Inner Join
 	public List<Hotel> seleccionarInnerJoin();
+	
+	//Inner join - Actualizacion
+	public List<Hotel> seleccionarInnerJoinActualizacion();
 	
 	//Outer Join
 	
@@ -30,5 +35,8 @@ public interface HotelRepository {
 	
 	//Join Where
 	public List<Hotel> seleccionarWhereJoin();
+	
+	//Join Fetch
+	public List<Hotel> seleccionarJoinFetch();
 	
 }
