@@ -29,4 +29,7 @@ public interface VehiculoService {
 		
 		//Join Where
 		public List<Vehiculo> buscarWhereJoin();
+		
+		//Join Fetch
+		public List<Vehiculo> buscarJoinFetch();
 }

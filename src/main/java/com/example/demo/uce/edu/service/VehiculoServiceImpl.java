@@ -68,4 +68,12 @@ public class VehiculoServiceImpl implements VehiculoService{
 		return this.vehiculoRepository.seleccionarWhereJoin();
 	}
 
+	@Override
+	public List<Vehiculo> buscarJoinFetch() {
+		
+		return this.vehiculoRepository.seleccionarJoinFetch();
+	}
+	
+	
+
 }

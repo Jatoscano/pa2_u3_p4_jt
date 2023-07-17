@@ -67,6 +67,13 @@ public class CiudadanoServiceImpl implements CiudadanoService{
 		
 		return this.ciudadanoRepository.seleccionarWhereJoin();
 	}
+
+	@Override
+	public List<Ciudadano> buscarJoinFetch() {
+		
+		return this.ciudadanoRepository.seleccionarJoinFetch();
+	}
+	
 	
 	
 	

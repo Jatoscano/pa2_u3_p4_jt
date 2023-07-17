@@ -29,4 +29,7 @@ public interface VehiculoRepository {
 		
 		//Join Where
 		public List<Vehiculo> seleccionarWhereJoin();
+		
+		//Join Fetch
+		public List<Vehiculo> seleccionarJoinFetch();
 }

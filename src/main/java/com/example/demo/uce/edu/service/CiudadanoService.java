@@ -27,5 +27,8 @@ public interface CiudadanoService {
 		public List<Ciudadano> buscarOuterFullJoin();
 		
 		//Join Where
-		public List<Ciudadano> buscarWhereJoin();	
+		public List<Ciudadano> buscarWhereJoin();
+		
+		//Join Fetch
+		public List<Ciudadano> buscarJoinFetch();
 }

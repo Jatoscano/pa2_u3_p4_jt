@@ -29,5 +29,8 @@ public interface CiudadanoRepository {
 		public List<Ciudadano> seleccionarOuterFullJoin();
 		
 		//Join Where
-		public List<Ciudadano> seleccionarWhereJoin();	
+		public List<Ciudadano> seleccionarWhereJoin();
+		
+		//Join Fetch
+		public List<Ciudadano> seleccionarJoinFetch();
 }

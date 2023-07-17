@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.uce.edu.repository.model.Ciudadano;
 import com.example.demo.uce.edu.repository.model.Vehiculo;
 
 import jakarta.persistence.EntityManager;
@@ -15,6 +14,7 @@ import jakarta.transaction.Transactional;
 @Repository
 @Transactional
 public class VehiculoRepositoryImpl implements VehiculoRepository{
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -130,5 +130,23 @@ public class VehiculoRepositoryImpl implements VehiculoRepository{
 									
 		    return myTypedQuery.getResultList();
 		}
+
+	//Join Fetch	
+		@Override
+		public List<Vehiculo> seleccionarJoinFetch() {
+			//SQL
+			//SELECT * FROM Vehiculo v JOIN FETCH Matriculas ma ON v.vehi_id = ma.matr_id_vehiculo
+			
+			//JPQL
+			//SELECT v FROM Vehiculo v JOIN FETCH v.matricula ma
+							
+			TypedQuery<Vehiculo> myTypedQuery = this.entityManager.createQuery(
+					"SELECT v FROM Vehiculo v JOIN FETCH v.matricula ma"
+					,Vehiculo.class);
+
+			return myTypedQuery.getResultList();
+		}
+		
+		
 
 }

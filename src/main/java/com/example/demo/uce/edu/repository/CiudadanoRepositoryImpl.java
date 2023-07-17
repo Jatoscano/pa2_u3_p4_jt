@@ -128,5 +128,23 @@ public class CiudadanoRepositoryImpl implements CiudadanoRepository{
 					,Ciudadano.class);
 									
 		    return myTypedQuery.getResultList();
+		}
+
+	//Join Fetch	
+		@Override
+		public List<Ciudadano> seleccionarJoinFetch() {
+			//SQL
+			//SELECT * FROM Ciudadano c JOIN FETCH Empleado em ON c.ciud_id = em.empl_ciudadano_id
+			
+			//JPQL
+			//SELECT c FROM Ciudadano c JOIN FETCH c.empleado em
+			
+			TypedQuery<Ciudadano> myTypedQuery = this.entityManager.createQuery(
+					"SELECT c FROM Ciudadano c JOIN FETCH c.empleado em"
+					,Ciudadano.class);
+			
+			return myTypedQuery.getResultList();
 		}	
+	
+		
 }
