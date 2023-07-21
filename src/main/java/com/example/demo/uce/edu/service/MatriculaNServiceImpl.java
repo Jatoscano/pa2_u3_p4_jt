@@ -1,5 +1,7 @@
 package com.example.demo.uce.edu.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +32,11 @@ public class MatriculaNServiceImpl implements MatriculaNService{
 		return this.matriculaNRepository.seleccionar(id);
 	}
 
+	@Override
+	public List<Matricula> buscarMatricula() {
+		
+		return this.matriculaNRepository.seleccionarMatricula();
+	}
+
+	
 }

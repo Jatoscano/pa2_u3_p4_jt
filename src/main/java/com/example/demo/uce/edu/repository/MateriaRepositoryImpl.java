@@ -36,20 +36,4 @@ public class MateriaRepositoryImpl implements MateriaRepository{
 		
 		return this.entityManager.find(Materia.class, id);
 	}
-
-	@Override
-	public List<Materia> seleccionarMaterias() {
-		//SQL
-		//SELECT * FROM Materia ma JOIN FETCH Matricula m ON ma.mate_id = m.mtla_id_materia
-								
-		//JPQL
-	    //SELECT ma FROM Materia ma JOIN FETCH ma.matriculas m
-								
-		TypedQuery<Materia> myTypedQuery = this.entityManager.createQuery(
-				"SELECT ma FROM Materia ma JOIN FETCH ma.matriculas m"
-				,Materia.class);
-
-		return myTypedQuery.getResultList();
-	}
-	
 }

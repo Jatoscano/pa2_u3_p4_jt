@@ -32,7 +32,7 @@ public class Semestre {
 	@Column(name = "sems_periodo")
 	private String periodo;
 	
-	@OneToMany(mappedBy = "semestre",cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "semestre", fetch = FetchType.LAZY)
 	private List<Materia> materias;
 
 	

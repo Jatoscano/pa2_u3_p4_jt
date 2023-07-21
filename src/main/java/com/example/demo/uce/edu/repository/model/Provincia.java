@@ -33,7 +33,7 @@ public class Provincia {
 	@Column(name = "prov_canton")
 	private String canton;
 	
-	@OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY)
 	private List<EstudianteN> estudiantesN;
 
 	//To String

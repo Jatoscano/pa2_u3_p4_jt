@@ -37,6 +37,8 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 	@Autowired
 	private MatriculaNService matriculaNService;
 	
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U3P4JtApplication.class, args);
 	}
@@ -76,6 +78,7 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 	    matricula.setFechaDeMatricula(LocalDateTime.now());
 	    matricula.setValor(new BigDecimal(60));
 	    
+	    
 	    estudiantes.add(estudiante);
 	    materias.add(materia);
 	    matriculas.add(matricula);
@@ -83,8 +86,10 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 	    provincia.setEstudiantesN(estudiantes);
 	    semestre.setMaterias(materias);
 	    
-	    estudiante.setMatriculas(matriculas);
-	    materia.setMatriculas(matriculas);
+	    //estudiante.setMatriculas(matriculas);
+	    estudiante.setProvincia(provincia);
+	    materia.setSemestre(semestre);
+	    //materia.setMatriculas(matriculas);
 	    
 	    matricula.setEstudianteN(estudiante);
 	    matricula.setMateria(materia);
@@ -93,20 +98,24 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 	    
 	    //CRUD
 	    this.matriculaNService.registrar(matricula);
-	    
-	    List<Materia> reporteMaterias = new ArrayList<>();
+	    //this.estudianteNService.registrar(estudiante);
+	    //this.materiaService.registrar(materia);
+	   
+	    /*
+	    List<Matricula> reporteMaterias = new ArrayList<>();
+	    List<Materia> ma1 = new ArrayList<>();
 	 
-	    reporteMaterias = this.materiaService.buscarMaterias();
-	    for(Materia ma: reporteMaterias) {
+	    reporteMaterias = this.matriculaNService.buscarMatricula();
+	    for(Matricula ma: reporteMaterias) {
 			if(ma == null) {
-			 System.err.println("No existe aun la Materia Inscrita");
+			 System.err.println("No existe aun la Matricula Inscrita");
 			}
-			System.out.println(ma.getNombre());
+			System.out.println(ma.getNumeroDeMatricula());
 			System.out.println("Tiene las siguientes materias: ");
-			for(Matricula m: ma.getMatriculas()) {
-				System.out.println(m.getMateria());
+			for(Materia m: ma1.getMateria()) {
+				System.out.println(m.getCodigo());
 			}
 	    }
-		
+		*/
 	}
 }

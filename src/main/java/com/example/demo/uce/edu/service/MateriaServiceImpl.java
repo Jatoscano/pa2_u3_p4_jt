@@ -31,12 +31,4 @@ public class MateriaServiceImpl implements MateriaService{
 		
 		return this.materiaRepository.seleccionar(id);
 	}
-
-	@Override
-	public List<Materia> buscarMaterias() {
-		
-		return this.materiaRepository.seleccionarMaterias();
-	}
-
-	
 }
