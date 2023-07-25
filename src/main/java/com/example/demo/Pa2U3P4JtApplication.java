@@ -9,19 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.example.demo.uce.edu.repository.model.CuentaBancaria;
-import com.example.demo.uce.edu.repository.model.EstudianteN;
-import com.example.demo.uce.edu.repository.model.Materia;
-import com.example.demo.uce.edu.repository.model.Matricula;
 import com.example.demo.uce.edu.repository.model.Propietario;
-import com.example.demo.uce.edu.repository.model.Provincia;
-import com.example.demo.uce.edu.repository.model.Semestre;
 import com.example.demo.uce.edu.repository.model.Transferencia;
 import com.example.demo.uce.edu.service.CuentaBancariaService;
-import com.example.demo.uce.edu.service.EstudianteNService;
-import com.example.demo.uce.edu.service.MateriaService;
-import com.example.demo.uce.edu.service.MatriculaNService;
 import com.example.demo.uce.edu.service.PropietarioService;
 import com.example.demo.uce.edu.service.TransferenciaService;
 
@@ -29,15 +22,13 @@ import com.example.demo.uce.edu.service.TransferenciaService;
 public class Pa2U3P4JtApplication implements CommandLineRunner{
 	
 	@Autowired
-	private EstudianteNService estudianteNService;
+	private TransferenciaService transferenciaService;
+
+	@Autowired
+	private CuentaBancariaService cuentaBancariaService;
 	
 	@Autowired
-	private MateriaService materiaService;
-	
-	@Autowired
-	private MatriculaNService matriculaNService;
-	
-	
+	private PropietarioService propietarioService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U3P4JtApplication.class, args);
@@ -46,76 +37,47 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Provincia provincia = new Provincia();
-	    EstudianteN estudiante = new EstudianteN();
-	    
-	    Semestre semestre = new Semestre();
-	    Materia materia = new Materia();
-	    
-	    Matricula matricula = new Matricula();
-	    
-	    List<EstudianteN> estudiantes = new ArrayList<>();
-	    List<Materia> materias = new ArrayList<>();
-	    List<Matricula> matriculas = new ArrayList<>(); 	
-	    
-	    estudiante.setApellido("Toscano");
-	    estudiante.setNombre("Andres");
-	    estudiante.setCedula("1724693740");
-	    
-	    provincia.setCodigo("02");
-	    provincia.setNombre("Pichincha");
-	    provincia.setCanton("Quito");
-	    
-	    semestre.setCodigo("COMP");
-	    semestre.setNivel("2");
-	    semestre.setPeriodo("2022 - 2023");
-	    
-	    materia.setCodigo("001");
-	    materia.setNombre("Prog.Av II");
-	    materia.setParalelo("C6");
-	    
-	    matricula.setNumeroDeMatricula("M - 001");
-	    matricula.setFechaDeMatricula(LocalDateTime.now());
-	    matricula.setValor(new BigDecimal(60));
-	    
-	    
-	    estudiantes.add(estudiante);
-	    materias.add(materia);
-	    matriculas.add(matricula);
-	    
-	    provincia.setEstudiantesN(estudiantes);
-	    semestre.setMaterias(materias);
-	    
-	    //estudiante.setMatriculas(matriculas);
-	    estudiante.setProvincia(provincia);
-	    materia.setSemestre(semestre);
-	    //materia.setMatriculas(matriculas);
-	    
-	    matricula.setEstudianteN(estudiante);
-	    matricula.setMateria(materia);
-	    
-	    
-	    
-	    //CRUD
-	    this.matriculaNService.registrar(matricula);
-	    //this.estudianteNService.registrar(estudiante);
-	    //this.materiaService.registrar(materia);
-	   
-	    /*
-	    List<Matricula> reporteMaterias = new ArrayList<>();
-	    List<Materia> ma1 = new ArrayList<>();
-	 
-	    reporteMaterias = this.matriculaNService.buscarMatricula();
-	    for(Matricula ma: reporteMaterias) {
-			if(ma == null) {
-			 System.err.println("No existe aun la Matricula Inscrita");
+		Propietario propietario = new Propietario();
+		CuentaBancaria cuentaBancaria1 = new CuentaBancaria();
+		CuentaBancaria cuentaBancaria2 = new CuentaBancaria();
+		List<CuentaBancaria> cuentasBancarias = new ArrayList<>(); 
+		Transferencia transferencia = new Transferencia();
+
+		propietario.setApellido("Cevalloz");
+		propietario.setNombre("Sebastian");
+		propietario.setCedula("7483920100");
+
+		cuentaBancaria1.setNumero("7481");
+		cuentaBancaria1.setTipo("Corriente");
+		cuentaBancaria1.setSaldo(new BigDecimal(2000));
+
+		cuentasBancarias.add(cuentaBancaria1);
+
+		transferencia.setFecha(LocalDateTime.now());
+		transferencia.setMonto(new BigDecimal(100));
+
+	    propietario.setCuentasBancarias(cuentasBancarias);
+	    cuentaBancaria1.setPropietario(propietario);
+	    transferencia.setCuentaBancaria(cuentaBancaria2);
+	    System.out.println("main: " + TransactionSynchronizationManager.isActualTransactionActive());
+
+	    this.propietarioService.registrar(propietario);
+
+	    //this.transferenciaService.realizarTransferencia(1 , 2, "0987", "4321", new BigDecimal(100));
+
+
+	    List<CuentaBancaria> reporteTransferencia = new ArrayList<>();
+
+	    reporteTransferencia = this.cuentaBancariaService.reporteTranferencias();
+	    for(CuentaBancaria ca: reporteTransferencia) {
+			if(ca == null) {
+			 System.err.println("No existe aun la Cuenta Bancaria");
 			}
-			System.out.println(ma.getNumeroDeMatricula());
-			System.out.println("Tiene las siguientes materias: ");
-			for(Materia m: ma1.getMateria()) {
-				System.out.println(m.getCodigo());
+			System.out.println(ca.getNumero());
+			System.out.println("Tiene las siguientes transferencias: ");
+			for(Transferencia t: ca.getTransferencias()) {
+				System.out.println(t.getCuentaBancaria());
 			}
 	    }
-		*/
 	}
 }

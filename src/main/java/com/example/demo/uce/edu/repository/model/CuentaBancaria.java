@@ -41,7 +41,7 @@ public class CuentaBancaria {
 	private Propietario propietario;
 
 	//Cuenta Bancaria - Tranferencia
-	@OneToMany(mappedBy = "cuentaBancaria")
+	@OneToMany(mappedBy = "cuentaBancaria", fetch = FetchType.LAZY)
 	private List<Transferencia> transferencias;
 	
 	//To String

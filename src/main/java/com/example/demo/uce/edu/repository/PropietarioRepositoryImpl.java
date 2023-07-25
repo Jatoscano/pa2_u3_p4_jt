@@ -1,6 +1,7 @@
 package com.example.demo.uce.edu.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.example.demo.uce.edu.repository.model.Propietario;
 
@@ -17,7 +18,7 @@ public class PropietarioRepositoryImpl implements PropietarioRepository{
 	
 	@Override
 	public void insertar(Propietario propietario) {
-		
+		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
 		this.entityManager.persist(propietario);
 	}
 
