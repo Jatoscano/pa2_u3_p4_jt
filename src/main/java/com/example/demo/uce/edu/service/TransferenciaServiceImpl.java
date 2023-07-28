@@ -12,6 +12,9 @@ import com.example.demo.uce.edu.repository.TransferenciaRepository;
 import com.example.demo.uce.edu.repository.model.CuentaBancaria;
 import com.example.demo.uce.edu.repository.model.Transferencia;
 
+import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
+
 @Service
 public class TransferenciaServiceImpl implements TransferenciaService{
 
@@ -46,7 +49,8 @@ public class TransferenciaServiceImpl implements TransferenciaService{
 	}
 
 	@Override
-	public void realizarTransferencia(Integer idOrigen, Integer idDestino,String cuentaOrigen, String cuentaDestino, BigDecimal monto) {
+	@Transactional(value = TxType.NOT_SUPPORTED)
+	public void realizarTransferencia(Integer idOrigen, Integer idDestino,String cuentaOrigen, String cuentaDestino, BigDecimal monto){
 		//1. Consulta del saldo a depositar a la apertura de nuestrs cuenta
 			CuentaBancaria cuentaBancariaOrigen = this.cuentaBancariaRepository.seleccionar(idOrigen);
 			CuentaBancaria cuentaBancariaDestino = this.cuentaBancariaRepository.seleccionar(idDestino);
@@ -75,14 +79,24 @@ public class TransferenciaServiceImpl implements TransferenciaService{
 			Transferencia transfer = new Transferencia();
 			transfer.setCuentaBancaria(cuentaBancariaOrigen);
 			transfer.setCuentaBancaria(cuentaBancariaDestino);
+			transfer.setFecha(LocalDateTime.now());
 			transfer.setMonto(monto);
+			
+			if(monto.compareTo(saldoCuentaOrigen) > 0) {
+				throw new RuntimeException();
+			}
+			
+			else {
+			this.transferenciaRepository.insertar(transfer);
+			}
 			
 			}
 			else {
-				//si no es sifuciente imprimir mensaje de que no hya saldo
+				//si no es suficiente imprimir mensaje de que no hya saldo
 				System.out.println("Su saldo no es suficiente, su saldo es de : "
 						+ saldoCuentaOrigen);
-			}				
+			}
+			
 	}
 
 	

@@ -11,6 +11,7 @@ public interface TransferenciaService {
     public Transferencia buscar(Integer id);
 	public void borrar(Integer id);
 	
-	public void realizarTransferencia(Integer idOrigen, Integer idDestino, String cuentaOrigen, String cuentaDestino, BigDecimal monto);
+	public void realizarTransferencia(Integer idOrigen, Integer idDestino, String cuentaOrigen, String cuentaDestino, BigDecimal monto) 
+			throws RuntimeException;
 	
 }

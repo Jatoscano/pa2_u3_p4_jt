@@ -61,9 +61,9 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 	    transferencia.setCuentaBancaria(cuentaBancaria2);
 	    System.out.println("main: " + TransactionSynchronizationManager.isActualTransactionActive());
 
-	    this.propietarioService.registrar(propietario);
+	    //this.propietarioService.registrar(propietario);
 
-	    //this.transferenciaService.realizarTransferencia(1 , 2, "0987", "4321", new BigDecimal(100));
+	    this.transferenciaService.realizarTransferencia(3 , 4, "4321", "2910", new BigDecimal(1891));
 
 
 	    List<CuentaBancaria> reporteTransferencia = new ArrayList<>();
@@ -73,10 +73,12 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 			if(ca == null) {
 			 System.err.println("No existe aun la Cuenta Bancaria");
 			}
+			else {
 			System.out.println(ca.getNumero());
 			System.out.println("Tiene las siguientes transferencias: ");
 			for(Transferencia t: ca.getTransferencias()) {
 				System.out.println(t.getCuentaBancaria());
+			}
 			}
 	    }
 	}
