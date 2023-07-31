@@ -33,6 +33,15 @@ public class Transferencia {
 	@ManyToOne
 	@JoinColumn(name = "tran_id_cuentaBancaria")
 	private CuentaBancaria cuentaBancaria;
+	/*
+	@ManyToOne
+	@JoinColumn(name = "tran_id_cuentaBancariaOrigen")
+	private CuentaBancaria cuentaBancariaOrigen;
+	
+	@ManyToOne
+	@JoinColumn(name = "tran_id_cuentaBancariaDestino")
+	private CuentaBancaria cuentaBancariaDestino;
+	*/
 	
 	//To String
 	@Override
