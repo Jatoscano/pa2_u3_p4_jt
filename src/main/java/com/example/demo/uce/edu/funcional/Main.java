@@ -93,6 +93,7 @@ public class Main {
 		
 		
 		//4. Function
+		//Lambdas
 		//IPersonaFunction<T, R> function
 		
 		//T-> Es el parametro que retorna
@@ -104,6 +105,11 @@ public class Main {
 		};
 		LOGGER.info("Function Lambda: " + function1.aplicate(8));
 		
+		//Metodos Referenciados
+		MetodosReferenciados<String, Integer> metodosReferenciados4 = new MetodosReferenciados();
+		IPersonaFunction<String, Integer> function2 = metodosReferenciados4::aplicacion;
+		LOGGER.info("Function Metodos Referenciados: " + function2.aplicate(10));
+		
 		//5. Unary Operator
 		//Lambdas
 		IPersonaUnaryOperator<Integer> unaryOperator1 = numero -> numero + (numero*2);
@@ -111,6 +117,11 @@ public class Main {
 		
 		UnaryOperatorFunction<Integer> unaryOperator2 = numero -> numero + (numero*2);
 		LOGGER.info("Unary Operator Function Lambda: " + unaryOperator2.aplicate(2));
+		
+		//Metodos Referenciados
+		MetodosReferenciados<Integer,Integer> metodosReferenciados5 = new MetodosReferenciados();
+		IPersonaFunction<Integer, Integer> unaryOperator3 = metodosReferenciados5::derivacion;
+		LOGGER.info("Unary Operator Metodos Referenciados: " + unaryOperator3.aplicate(10));
 
 	}
 
