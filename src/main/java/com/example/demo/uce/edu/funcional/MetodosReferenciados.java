@@ -6,14 +6,20 @@ import org.slf4j.LoggerFactory;
 public class MetodosReferenciados<T,R> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MetodosReferenciados.class);
-	public Integer devuelveId() {
+	public static Integer devuelveId() {
 		
 		return 10;
 	}
 	
-	public void aceptar(String arg) {
+	
+	public static void aceptar(String arg) {
 		String cadena = "Juan";
 		LOGGER.info(cadena + " " + arg);
+	}
+	
+	public static String devuelveIdO() {
+		LOGGER.info("Metodos Referenciados HO:");
+		return "Juan";
 	}
 	
 	public boolean evaluaString(String arg) {
