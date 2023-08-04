@@ -136,21 +136,45 @@ public class Main {
 		
 		IPersonaSupplier<String> supplierO = new PersonaSupplierImpl();
 		
-		MetodosHighOrder.metodo(supplierO);
+		MetodosHighOrder.metodoSupplier(supplierO);
 		
 		//2. Lambdas
-		MetodosHighOrder.metodo(()-> "1234567890");
+		MetodosHighOrder.metodoSupplier(()-> "1234567890");
 		
-		//3. Metodo Referencial
-		MetodosHighOrder.metodo(MetodosReferenciados::devuelveIdO);
+		//3. Metodos Referenciados
+		MetodosHighOrder.metodoSupplier(MetodosReferenciados::devuelveIdO);
 		
 		//Consumer
 		//1. Clases
 		MetodosHighOrder.metodoConsumer(new IPersonaConsumerImpl(), "Clases Consummer");
 		//2. Lambdas
 		MetodosHighOrder.metodoConsumer(valor -> LOGGER.info(valor), "Lambdas Consumer");
-		//3. Metodo Refernciado
-		MetodosHighOrder.metodoConsumer(MetodosReferenciados::aceptar, "Metodos Referciados Consumer");
+		//3. Metodos Referenciados
+		MetodosHighOrder.metodoConsumer(MetodosReferenciados::aceptar, "Metodos Referenciados Consumer");
+		
+		//Predicate
+		//1. Clases
+		MetodosHighOrder.metodoPredicate(new IPersonaPredicateImpl<String>(), "Juan");
+		//2. Lambdas
+		MetodosHighOrder.metodoPredicate(cadena ->cadena.contains("J"), "Juan");
+		//3. Metodos Referenciados
+		MetodosHighOrder.metodoPredicate(MetodosReferenciados::evaluaStringO, "Juan");
+		
+		//Function
+		//1. Clases
+		MetodosHighOrder.metodoFunction(new IPersonaFunctionImpl<String, Integer>(),10);
+		//2. Lambdas
+		MetodosHighOrder.metodoFunction(valor -> valor.toString().concat("valor"), 8);
+		//3. Metodos Referenciados
+		MetodosHighOrder.metodoFunction(MetodosReferenciados::aplicacionO ,8);
+		
+		//Function
+		//1. Clases
+		MetodosHighOrder.metodoUnaryOperator(new IPersonaUnaryOperatorImpl<>(), 10);
+		//2. Lambdas
+		MetodosHighOrder.metodoUnaryOperator(numero -> numero + (numero*2), 8);
+		//3. Metodos Referenciados
+		MetodosHighOrder.metodoUnaryOperator(MetodosReferenciados::derivacionO, 10);
 		
 		//Interfaces Funcionales Java
 		//Supplier

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 public class MetodosReferenciados<T,R> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MetodosReferenciados.class);
+	
 	public static Integer devuelveId() {
 		
 		return 10;
@@ -32,6 +33,19 @@ public class MetodosReferenciados<T,R> {
 			return false;
 		}
 	}
+	
+	public static boolean evaluaStringO(String arg) {
+		String cadena = "Juan";
+		if(cadena.contains("J")) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
+	
 	public T aplicacion(R arg) {
 		 
 		T resultado;
@@ -41,7 +55,27 @@ public class MetodosReferenciados<T,R> {
 	    return resultado;
 	}
 	
-	public T derivacion(T arg) {
+	public static <String> String aplicacionO(Integer arg) {
+		 
+		String resultado;
+		String cadena = (String) "Juan";
+		resultado = (String) arg.toString().concat((java.lang.String) cadena);
+		
+	    return resultado;
+	}
+	
+	public T  derivacion(T arg) {
+		T numero;
+		Integer suma = 10;
+		
+		suma = suma + (suma*2);
+		arg = (T) suma;
+		numero = arg;
+		
+		return numero;
+	}
+	
+	public static <T>  T derivacionO(T arg) {
 		T numero;
 		Integer suma = 10;
 		
