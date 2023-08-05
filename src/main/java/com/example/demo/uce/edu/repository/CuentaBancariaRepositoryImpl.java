@@ -2,10 +2,11 @@ package com.example.demo.uce.edu.repository;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.uce.edu.repository.model.CuentaBancaria;
-import com.example.demo.uce.edu.repository.model.Vehiculo;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,13 +18,15 @@ import jakarta.transaction.Transactional.TxType;
 @Transactional
 public class CuentaBancariaRepositoryImpl implements CuentaBancariaRepository{
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(CiudadanoRepositoryImpl.class);
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
 	@Transactional(value = TxType.REQUIRED)
 	public void insertar(CuentaBancaria cuentaBancaria) {
-		
+		LOGGER.info("Hilo Repository: "+ Thread.currentThread().getName());
 		this.entityManager.persist(cuentaBancaria);
 	}
 

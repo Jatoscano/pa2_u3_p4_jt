@@ -12,4 +12,6 @@ public interface CuentaBancariaService {
 	public void borrar(Integer id);
 	
 	public List<CuentaBancaria> reporteTranferencias();
+	
+	public String agregarDos(CuentaBancaria cuentaBancaria);
 }

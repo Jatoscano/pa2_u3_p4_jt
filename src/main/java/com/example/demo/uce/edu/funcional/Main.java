@@ -180,8 +180,8 @@ public class Main {
 		//Supplier
 		Stream<String> lista = Stream.generate(() ->"12345678990").limit(10);
 		lista.forEach(cadena -> LOGGER.info(cadena));
-		IPersonaSupplier<String> supplier5 = MetodosReferenciados::devuelveIdO;
-		supplier5.equals(lista);
+		
+		
 		//Consummer
 		List<Integer> listaNumeros = Arrays.asList(1,2,3,4,5,6,7,8,9,0);
 		listaNumeros.forEach(cadena ->{
