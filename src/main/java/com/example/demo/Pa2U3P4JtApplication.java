@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.example.demo.uce.edu.repository.model.CuentaBancaria;
@@ -21,6 +24,7 @@ import com.example.demo.uce.edu.service.CuentaBancariaService;
 import com.example.demo.uce.edu.service.PropietarioService;
 import com.example.demo.uce.edu.service.TransferenciaService;
 
+@EnableAsync
 @SpringBootApplication
 public class Pa2U3P4JtApplication implements CommandLineRunner{
 	
@@ -41,7 +45,7 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		LOGGER.info("Hilo: "+ Thread.currentThread().getName());
+		LOGGER.info("Hilo main: "+ Thread.currentThread().getName());
 	/*	
 		Propietario propietario = new Propietario();
 		CuentaBancaria cuentaBancaria1 = new CuentaBancaria();
@@ -130,26 +134,97 @@ public class Pa2U3P4JtApplication implements CommandLineRunner{
 	    LOGGER.info("Tiempo Transcurrido: "+(tiempoFinal - tiempoInicial));
 	    LOGGER.info("Tiempo Transcurrido: "+tiempoTranscurrido);
 	*/	
+		
+	/*	
 		//Inicio con el metodo agregarDos
 				List<CuentaBancaria> listaCuentas = new ArrayList<>();
 				long tiempoInicial = System.currentTimeMillis();
-			    for (int i =0; i<=100; i++){
+			    for (int i =0; i<=10; i++){
 			    	CuentaBancaria cuentaBancaria = new CuentaBancaria();
 			    	cuentaBancaria.setNumero(String.valueOf(i));
 					cuentaBancaria.setTipo("Corriente");
 					cuentaBancaria.setSaldo(new BigDecimal(2000));
 				    listaCuentas.add(cuentaBancaria);
+				    this.cuentaBancariaService.agregarDos(cuentaBancaria);
 			    }
 			   
-			    Stream<String> listaFinal = listaCuentas.parallelStream().map(cuenta ->this.cuentaBancariaService.agregarDos(cuenta));
-			    LOGGER.info("Se guardaron las siguientes cuentas: ");
-			    listaFinal.forEach(cadena ->LOGGER.info(cadena));
+			    //List<String> listaFinal = listaCuentas.parallelStream()
+			    		//.map(cuenta ->this.cuentaBancariaService.agregarDos(cuenta))
+			    		//.collect(Collectors.toList());
+			    
+			    //Cuando se mantiene una lista en el registro con funcionalidad forEach
+			    //Stream<String> listaFinal = listaCuentas.parallelStream().map(cuenta ->this.cuentaBancariaService.agregarDos(cuenta));
+			    //LOGGER.info("Se guardaron las siguientes cuentas: ");
+			    //listaFinal.forEach(cadena ->LOGGER.info(cadena));
 			   
 			    //Fin
 			    long tiempoFinal = System.currentTimeMillis();
 			    long tiempoTranscurrido = (tiempoFinal - tiempoInicial)/1000;
 			    LOGGER.info("Tiempo Transcurrido: "+(tiempoFinal - tiempoInicial));
 			    LOGGER.info("Tiempo Transcurrido: "+tiempoTranscurrido); 
+			    LOGGER.info("Se termino de procesar todo");
+			    
+			    */
+		
+	/*	
+		//Inicio con el metodo Asincrono sin respuesta
+		List<CuentaBancaria> listaCuentas = new ArrayList<>();
+		long tiempoInicial = System.currentTimeMillis();
+	    for (int i =0; i<=10; i++){
+	    	CuentaBancaria cuentaBancaria = new CuentaBancaria();
+	    	cuentaBancaria.setNumero(String.valueOf(i));
+			cuentaBancaria.setTipo("Corriente");
+			cuentaBancaria.setSaldo(new BigDecimal(2000));
+		    listaCuentas.add(cuentaBancaria);
+		    this.cuentaBancariaService.agregarAsincrono(cuentaBancaria);
+	    }
+	   
+	    //List<String> listaFinal = listaCuentas.parallelStream()
+	    		//.map(cuenta ->this.cuentaBancariaService.agregarDos(cuenta))
+	    		//.collect(Collectors.toList());
+	    
+	    //Cuando se mantiene una lista en el registro con funcionalidad forEach
+	    //Stream<String> listaFinal = listaCuentas.parallelStream().map(cuenta ->this.cuentaBancariaService.agregarDos(cuenta));
+	    //LOGGER.info("Se guardaron las siguientes cuentas: ");
+	    //listaFinal.forEach(cadena ->LOGGER.info(cadena));
+	   
+	    //Fin
+	    long tiempoFinal = System.currentTimeMillis();
+	    long tiempoTranscurrido = (tiempoFinal - tiempoInicial)/1000;
+	    LOGGER.info("Tiempo Transcurrido: "+(tiempoFinal - tiempoInicial));
+	    LOGGER.info("Tiempo Transcurrido: "+tiempoTranscurrido); 
+	    LOGGER.info("Se termino de procesar todo");
+	    */
+		
+		//Inicio con el metodo Asincorno con repuesta
+		List<CuentaBancaria> listaCuentas = new ArrayList<>();
+		List<CompletableFuture<String>> listaRespuestas = new ArrayList<>();
+		long tiempoInicial = System.currentTimeMillis();
+	    for (int i =0; i<=10; i++){
+	    	CuentaBancaria cuentaBancaria = new CuentaBancaria();
+	    	cuentaBancaria.setNumero(String.valueOf(i));
+			cuentaBancaria.setTipo("Corriente");
+			cuentaBancaria.setSaldo(new BigDecimal(2000));
+		    listaCuentas.add(cuentaBancaria);
+		    CompletableFuture<String> respuesta = this.cuentaBancariaService.agregarAsincronoDos(cuentaBancaria);
+	        listaRespuestas.add(respuesta);
+	    }
+	   
+	    //Sentencia que espera que termine de procesarse todos los hilos para obtener una respuesta
+	    
+	    CompletableFuture.allOf(listaRespuestas.get(0), listaRespuestas.get(1),
+	    		                listaRespuestas.get(2), listaRespuestas.get(3),
+	    		                listaRespuestas.get(4), listaRespuestas.get(5),
+	    		                listaRespuestas.get(6), listaRespuestas.get(7),
+	    		                listaRespuestas.get(8), listaRespuestas.get(9));
+	    
+	    LOGGER.info("Respuesta Cero: "+ listaRespuestas.get(0).get()); 
+	    //Fin
+	    long tiempoFinal = System.currentTimeMillis();
+	    long tiempoTranscurrido = (tiempoFinal - tiempoInicial)/1000;
+	    LOGGER.info("Tiempo Transcurrido: "+(tiempoFinal - tiempoInicial));
+	    LOGGER.info("Tiempo Transcurrido: "+tiempoTranscurrido); 
+	    LOGGER.info("Se termino de procesar todo");
 	}
 	
 }
